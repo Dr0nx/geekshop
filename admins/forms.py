@@ -53,7 +53,7 @@ class ProductAdminForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput())
     short_description = forms.CharField(widget=forms.TextInput())
     category = forms.ModelChoiceField(empty_label='Выберите категорию', queryset=ProductCategory.objects.all(),
-                                      widget=forms.Select())
+                                      widget=forms.Select(attrs={'class': 'form-control'}))
     price = forms.CharField(widget=forms.TextInput())
     quantity = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(widget=forms.FileInput(), required=False)
@@ -74,4 +74,3 @@ class ProductAdminForm(forms.ModelForm):
                 field.widget.attrs['class'] = 'form-control'
             else:
                 field.widget.attrs['class'] = 'form-control py-4'
-        self.fields['image'].widget.attrs['class'] = 'custom-file-input'
