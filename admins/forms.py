@@ -50,7 +50,7 @@ class ProductCategoryAdminForm(forms.ModelForm):
 
 
 class ProductAdminForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput())
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     short_description = forms.CharField(widget=forms.TextInput())
     category = forms.ModelChoiceField(empty_label='Выберите категорию', queryset=ProductCategory.objects.all(),
                                       widget=forms.Select(attrs={'class': 'form-control'}))
