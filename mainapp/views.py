@@ -1,4 +1,5 @@
 # import os.path
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.views.generic import DetailView
 
@@ -14,16 +15,30 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request):
+def products(request, id_category=None, page=1):
     context = {
-        'title': 'Geekshop - Каталог',
-        'categories': ProductCategory.objects.all(),
-        'products': Product.objects.all(),
+        'title': 'Geekshop | Каталог',
     }
+
+    if id_category:
+        prods = Product.objects.filter(category_id=id_category)
+    else:
+        prods = Product.objects.all()
+
+    paginator = Paginator(prods, per_page=3)
+
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+
+    context['products'] = products_paginator
+    context['categories'] = ProductCategory.objects.all()
 
     #    with open("mainapp/fixtures/products.json", "w") as write_file:
     #        json.dump(context, write_file)
-
     return render(request, 'mainapp/products.html', context)
 
 
