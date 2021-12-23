@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib import auth, messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -11,19 +10,14 @@ from django.views.generic import FormView, UpdateView
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm, UserProfileEditForm
 from authapp.models import User
-from baskets.models import Basket
 
 
-# from mainapp.mixin import BaseClassContextMixin, UserDispatchMixin
-
-# class LoginListView(LoginView, BaseClassContextMixin):
 class LoginListView(LoginView):
     template_name = 'authapp/login.html'
     form_class = UserLoginForm
     title = 'GeekShop - Авторизация'
 
 
-# class RegisterListView(FormView, BaseClassContextMixin):
 class RegisterListView(FormView):
     model = User
     template_name = 'authapp/register.html'
@@ -69,7 +63,6 @@ class RegisterListView(FormView):
             return HttpResponseRedirect(reverse('index'))
 
 
-# class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
 class ProfileFormView(UpdateView):
     template_name = 'authapp/profile.html'
     form_class = UserProfilerForm
