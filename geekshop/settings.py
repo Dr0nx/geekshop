@@ -44,11 +44,13 @@ INSTALLED_APPS = [
     'baskets',
     'admins',
     'social_django',
+    'ordersapp',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -71,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
                 'mainapp.context_processors.basket',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
@@ -112,15 +115,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-# LANGUAGE_CODE = 'ru-ru'
-#
-# TIME_ZONE = 'Europe/Moscow'
-#
-# USE_I18N = True
-#
-# USE_L10N = True
-#
-# USE_TZ = True
+LANGUAGE_CODE = 'ru'
+
+ugettext = lambda s: s
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
+
+LANGUAGES = (
+    ('ru', ugettext('Russian')),
+    ('en', ugettext('English')),
+)
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
