@@ -23,7 +23,7 @@ window.onload = function () {
     // console.info('QUANTITY', quantity_arr)
     // console.info('PRICE', price_arr)
 
-    // 1 метод
+    // 1метод
     $('.order_form').on('click', 'input[type=number]', function () {
 
         let target = event.target;

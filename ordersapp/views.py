@@ -131,8 +131,7 @@ def get_product_price(request, pk):
 @receiver(pre_save, sender=OrderItem)
 def product_quantity_update_save(sender, instance, **kwargs):
     if instance.pk:
-        get_item = instance.get_item(int(instance.pk))
-        instance.product.quantity -= instance.quantity - get_item
+        instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
     else:
         instance.product.quantity -= instance.quantity
     instance.product.save()
