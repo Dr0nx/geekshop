@@ -23,6 +23,7 @@ window.onload = function () {
     // console.info('QUANTITY', quantity_arr)
     // console.info('PRICE', price_arr)
 
+    //
     // 1метод
     $('.order_form').on('click', 'input[type=number]', function () {
 
@@ -70,6 +71,7 @@ window.onload = function () {
         let target_name = row[0].querySelector('input[type="number"]').name
         orderitem_num = parseInt(target_name.replace('orderitems-', '').replace('-quantity', ''))
         delta_quantity = -quantity_arr[orderitem_num]
+        quantity_arr[orderitem_num] = 0;
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
     }
 
@@ -104,34 +106,64 @@ window.onload = function () {
 
     })
 
+    // $('.order_form select').change(function () {
+    $(document).on('change', '.order_form select', function () {
+
+        let target = event.target;
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
+        let orderitem_product_pk = target.options[target.selectedIndex].value;
+
+        // console.log(orderitem_num)
+        // console.log(orderitem_product_pk)
+
+        if (orderitem_product_pk) {
+            $.ajax({
+                url: '/orders/product/' + orderitem_product_pk + '/price/',
+                success: function (data) {
+                    if (data.price) {
+                        price_arr[orderitem_num] = parseFloat(data.price)
+                        if (isNaN(quantity_arr[orderitem_num])) {
+                            quantity_arr[orderitem_num] = 0;
+                        }
+                        let price_html = '<span class="orderitems-' + orderitem_num + '-price">'
+                            + data.price.toString().replace('.', ',') + '</span> руб';
+                        let current_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1) + ')');
+                        current_tr.find('td:eq(2)').html(price_html)
+                    }
+                }
+            })
+        }
+    })
 }
 
-$('.order_form select').change(function () {
-
-    let target = event.target;
-    orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
-    let orderitem_product_pk = target.options[target.selectedIndex].value;
-
-    // console.log(orderitem_num)
-    // console.log(orderitem_product_pk)
-
-    if (orderitem_product_pk) {
-        $.ajax({
-            url: '/orders/product/' + orderitem_product_pk + '/price/',
-            success: function (data) {
-                if (data.price) {
-                    price_arr[orderitem_num] = parseFloat(data.price)
-                    if (isNaN(quantity_arr[orderitem_num])) {
-                        quantity_arr[orderitem_num] = 0;
-                    }
-                    let price_html = '<span class="orderitems-' + orderitem_num + '-price">'
-                        + data.price.toString().replace('.', ',') + '</span> руб';
-                    let current_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1) + ')');
-                    current_tr.find('td:eq(2)').html(price_html)
-                }
-            }
-
-
-        })
-    }
-})
+// // $(document).on('change', '.order_form select', function () {
+// $('.order_form select').change(function () {
+//
+//       let target = event.target;
+//       orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
+//       let orderitem_product_pk = target.options[target.selectedIndex].value;
+//
+//       console.log(orderitem_num)
+//       console.log(orderitem_product_pk)
+//
+//       if (orderitem_product_pk) {
+//           $.ajax({
+//               url: '/orders/product/' + orderitem_product_pk + '/price/',
+//               success: function (data) {
+//                   if (data.price) {
+//                       price_arr[orderitem_num] = parseFloat(data.price)
+//                       if (isNaN(quantity_arr[orderitem_num])) {
+//                           quantity_arr[orderitem_num] = 0;
+//                       }
+//                       let price_html = '<span class="orderitems-' + orderitem_num + '-price">'
+//                           + data.price.toString().replace('.', ',') + '</span> руб';
+//                       let current_tr = $('.order_form table').find('tr:eq('+(orderitem_num+1)+')');
+//                       current_tr.find('td:eq(2)').html(price_html)
+//                   }
+//               }
+//
+//
+//           })
+//       }
+//
+//   })
