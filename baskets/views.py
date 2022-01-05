@@ -22,7 +22,7 @@ def basket_add(request, id):
         else:
             Basket.objects.create(user=user_select, product=product, quantity=1)
 
-        products = Product.objects.all()
+        products = Product.objects.all().select_related('category_id')
         context = {'products': products}
         result = render_to_string('mainapp/includes/card.html', context)
         return JsonResponse({'result': result})

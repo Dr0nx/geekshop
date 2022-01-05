@@ -18,9 +18,9 @@ class ProductList(ListView):
         context = super(ProductList, self).get_context_data(**kwargs)
 
         if self.kwargs.get('id_category'):
-            prods = Product.objects.filter(category_id=self.kwargs['id_category'])
+            prods = Product.objects.filter(category_id=self.kwargs['id_category']).select_related('category')
         else:
-            prods = Product.objects.all()
+            prods = Product.objects.all().select_related('category')
 
         page = self.kwargs.get('page')
         paginator = Paginator(prods, per_page=3)
