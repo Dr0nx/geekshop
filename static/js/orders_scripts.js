@@ -22,7 +22,6 @@ window.onload = function () {
     }
     // console.info('QUANTITY', quantity_arr)
     // console.info('PRICE', price_arr)
-
     //
     // 1метод
     $('.order_form').on('click', 'input[type=number]', function () {
@@ -71,7 +70,6 @@ window.onload = function () {
         let target_name = row[0].querySelector('input[type="number"]').name
         orderitem_num = parseInt(target_name.replace('orderitems-', '').replace('-quantity', ''))
         delta_quantity = -quantity_arr[orderitem_num]
-        quantity_arr[orderitem_num] = 0;
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
     }
 
