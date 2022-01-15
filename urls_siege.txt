@@ -1,2 +1,2 @@
-http://194.67.92.252/users/login/ POST name=dr0n&password=123123123
-http://194.67.92.252/users/profile/
+http://127.0.0.1:8000/users/login/ POST name=dr0n&pass=123
+http://127.0.0.1:8000/orders/
