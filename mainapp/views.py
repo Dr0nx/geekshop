@@ -12,7 +12,7 @@ def get_link_category():
     if settings.LOW_CACHE:
         key = 'link_category'
         link_category = cache.get(key)
-        # print(f'link_category = {link_category}')
+        print(f'link_category = {link_category}')
         if link_category is None:
             link_category = ProductCategory.objects.all()
             cache.set(key, link_category)
@@ -25,7 +25,7 @@ def get_link_product():
     if settings.LOW_CACHE:
         key = 'link_product'
         link_product = cache.get(key)
-        # print(f'link_product = {link_product}')
+        print(f'link_product = {link_product}')
         if link_product is None:
             link_product = Product.objects.all().select_related('category')
             cache.set(key, link_product)
@@ -38,7 +38,7 @@ def get_product(pk):
     if settings.LOW_CACHE:
         key = f'product{pk}'
         product = cache.get(key)
-        # print(f'product = {product}')
+        print(f'product = {product}')
         if product is None:
             product = Product.objects.get(id=pk)
             cache.set(key, product)
