@@ -10,6 +10,7 @@ def get_link_category():
     if settings.LOW_CACHE:
         key = 'link_category'
         link_category = cache.get(key)
+        print(f'link_category = {link_category}')
         if link_category is None:
             link_category = ProductCategory.objects.all()
             cache.set(key, link_category)
