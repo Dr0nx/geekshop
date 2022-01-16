@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.cache import cache
 from django.conf import settings
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page, never_cache
 from django.views.generic import DetailView, TemplateView, ListView
 
@@ -11,7 +12,7 @@ def get_link_category():
     if settings.LOW_CACHE:
         key = 'link_category'
         link_category = cache.get(key)
-        print(f'link_category = {link_category}')
+        # print(f'link_category = {link_category}')
         if link_category is None:
             link_category = ProductCategory.objects.all()
             cache.set(key, link_category)
@@ -24,7 +25,7 @@ def get_link_product():
     if settings.LOW_CACHE:
         key = 'link_product'
         link_product = cache.get(key)
-        print(f'link_product = {link_product}')
+        # print(f'link_product = {link_product}')
         if link_product is None:
             link_product = Product.objects.all().select_related('category')
             cache.set(key, link_product)
@@ -37,7 +38,7 @@ def get_product(pk):
     if settings.LOW_CACHE:
         key = f'product{pk}'
         product = cache.get(key)
-        print(f'product = {product}')
+        # print(f'product = {product}')
         if product is None:
             product = Product.objects.get(id=pk)
             cache.set(key, product)
@@ -52,7 +53,7 @@ class IndexTemplateView(TemplateView):
 
 
 # @cache_page(3600)
-@never_cache
+@method_decorator([never_cache], name='dispatch')
 class ProductList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
