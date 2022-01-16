@@ -52,8 +52,8 @@ class IndexTemplateView(TemplateView):
     context = {'title': 'Geekshop'}
 
 
-# @cache_page(3600)
-@method_decorator([never_cache], name='dispatch')
+@cache_page(3600)
+# @method_decorator([never_cache], name='dispatch')
 class ProductList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
