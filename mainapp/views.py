@@ -60,7 +60,7 @@ class ProductList(ListView):
         else:
             prods = Product.objects.all().select_related('category')
 
-        prods = get_link_product()
+        # prods = get_link_product()
 
         page = self.kwargs.get('page')
         paginator = Paginator(prods, per_page=3)
