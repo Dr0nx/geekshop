@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.cache import cache
 from django.conf import settings
+from django.views.decorators.cache import cache_page, never_cache
 from django.views.generic import DetailView, TemplateView, ListView
 
 from mainapp.models import ProductCategory, Product
@@ -50,6 +51,8 @@ class IndexTemplateView(TemplateView):
     context = {'title': 'Geekshop'}
 
 
+# @cache_page(3600)
+@never_cache
 class ProductList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
