@@ -23,6 +23,7 @@ def get_link_product():
     if settings.LOW_CACHE:
         key = 'link_product'
         link_product = cache.get(key)
+        print(f'link_product = {link_product}')
         if link_product is None:
             link_product = Product.objects.all().select_related('category')
             cache.set(key, link_product)
@@ -35,6 +36,7 @@ def get_product(pk):
     if settings.LOW_CACHE:
         key = f'product{pk}'
         product = cache.get(key)
+        print(f'product = {product}')
         if product is None:
             product = Product.objects.get(id=pk)
             cache.set(key, product)
@@ -61,7 +63,7 @@ class ProductList(ListView):
         else:
             prods = Product.objects.all().select_related('category')
 
-        # prods = get_link_product()
+        prods = get_link_product()
 
         page = self.kwargs.get('page')
         paginator = Paginator(prods, per_page=3)
@@ -85,7 +87,5 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
-        product = self.get_object()
-        context['products'] = product
-        context['categories'] = ProductCategory.objects.all()
+        context['product'] = get_product(self.kwargs.get('pk'))
         return context
