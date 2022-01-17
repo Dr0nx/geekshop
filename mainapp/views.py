@@ -12,7 +12,6 @@ def get_link_category():
     if settings.LOW_CACHE:
         key = 'link_category'
         link_category = cache.get(key)
-        print(f'link_category = {link_category}')
         if link_category is None:
             link_category = ProductCategory.objects.all()
             cache.set(key, link_category)
@@ -25,7 +24,6 @@ def get_link_product():
     if settings.LOW_CACHE:
         key = 'link_product'
         link_product = cache.get(key)
-        print(f'link_product = {link_product}')
         if link_product is None:
             link_product = Product.objects.all().select_related('category')
             cache.set(key, link_product)
@@ -38,7 +36,6 @@ def get_product(pk):
     if settings.LOW_CACHE:
         key = f'product{pk}'
         product = cache.get(key)
-        print(f'product = {product}')
         if product is None:
             product = Product.objects.get(id=pk)
             cache.set(key, product)
@@ -62,12 +59,12 @@ class ProductList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductList, self).get_context_data(**kwargs)
 
-        # if self.kwargs.get('id_category'):
-        #     prods = Product.objects.filter(category_id=self.kwargs['id_category']).select_related('category')
-        # else:
-        #     prods = Product.objects.all().select_related('category')
+        if self.kwargs.get('id_category'):
+           prods = Product.objects.filter(category_id=self.kwargs['id_category']).select_related('category')
+        else:
+           prods = Product.objects.all().select_related('category')
 
-        prods = get_link_product()
+        # prods = get_link_product()
 
         page = self.kwargs.get('page')
         paginator = Paginator(prods, per_page=3)
@@ -80,8 +77,8 @@ class ProductList(ListView):
             products_paginator = paginator.page(paginator.num_pages)
 
         context['products'] = products_paginator
-        # context['categories'] = ProductCategory.objects.all()
-        context['categories'] = get_link_category()
+        context['categories'] = ProductCategory.objects.all()
+        # context['categories'] = get_link_category()
         return context
 
 
@@ -91,5 +88,8 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
-        context['product'] = get_product(self.kwargs.get('pk'))
+        product = self.get_object()
+        context['product'] = product
+        # context['product'] = get_product(self.kwargs.get('pk'))
+        # context['categories'] = ProductCategory.objects.all()
         return context
