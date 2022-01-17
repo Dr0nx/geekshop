@@ -240,11 +240,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-<<<<<<< HEAD
-        'LOCATION': 'unix:/home/django/geekshop/geekshop/geekshop.sock',
-=======
         'LOCATION': 'unix:/tmp/geekshop.sock',
->>>>>>> f9df5d988705617a3733012d92d63a6de8484f93
     }
 }
 
