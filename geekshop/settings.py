@@ -96,15 +96,15 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
     # 'default': {
-    #     'NAME': 'geekshop',
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'USER': 'postgres',
-    # }
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    'default': {
+        'NAME': 'geekshop',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres',
+    }
 }
 
 # Password validation
@@ -153,8 +153,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (BASE_DIR / 'static',)
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = (BASE_DIR / 'static',)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -240,7 +240,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'unix:/tmp/memcached.sock',
+        'LOCATION': 'unix:/home/django/geekshop/geekshop/geekshop.sock',
     }
 }
 
