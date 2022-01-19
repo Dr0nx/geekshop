@@ -1,4 +1,3 @@
-
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.cache import cache
 from django.conf import settings
