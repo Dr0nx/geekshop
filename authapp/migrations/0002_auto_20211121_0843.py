@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='age',
-            field=models.PositiveIntegerField(default=80),
+            field=models.PositiveIntegerField(default=18),
         ),
     ]
