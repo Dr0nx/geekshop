@@ -35,9 +35,12 @@ class UserAdminProfileForm(UserProfilerForm):
 
 
 class ProductCategoryAdminForm(forms.ModelForm):
+    discount = forms.IntegerField(widget=forms.NumberInput(), label='скидка', required=False, min_value=0, max_value=90,
+                                  initial=0)
+
     class Meta:
         model = ProductCategory
-        fields = ('name', 'description')
+        fields = ('name', 'discount', 'description')
 
     def __init__(self, *args, **kwargs):
         super(ProductCategoryAdminForm, self).__init__(*args, **kwargs)
