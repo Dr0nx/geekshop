@@ -153,8 +153,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = (BASE_DIR / 'static',)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (BASE_DIR / 'static',)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -169,7 +169,7 @@ LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/products/'
 LOGIN_ERROR_URL = '/'
 
-# DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://localhost:8000'
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = 25
 # EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
