@@ -50,7 +50,7 @@ class IndexTemplateView(TemplateView):
 
 
 # @method_decorator([never_cache], name='dispatch')
-@method_decorator([cache_page(3600)], name='dispatch')
+# @method_decorator([cache_page(3600)], name='dispatch')
 class ProductList(ListView):
     model = Product
     template_name = 'mainapp/products.html'
@@ -59,12 +59,12 @@ class ProductList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductList, self).get_context_data(**kwargs)
 
-        # if self.kwargs.get('id_category'):
-        #    prods = Product.objects.filter(category_id=self.kwargs['id_category']).select_related('category')
-        # else:
-        #    prods = Product.objects.all().select_related('category')
+        if self.kwargs.get('id_category'):
+            prods = Product.objects.filter(category_id=self.kwargs['id_category']).select_related('category')
+        else:
+            prods = Product.objects.all().select_related('category')
 
-        prods = get_link_product()
+        # prods = get_link_product()
 
         page = self.kwargs.get('page')
         paginator = Paginator(prods, per_page=3)
@@ -77,8 +77,8 @@ class ProductList(ListView):
             products_paginator = paginator.page(paginator.num_pages)
 
         context['products'] = products_paginator
-        # context['categories'] = ProductCategory.objects.all()
-        context['categories'] = get_link_category()
+        context['categories'] = ProductCategory.objects.all()
+        # context['categories'] = get_link_category()
         return context
 
 
@@ -89,7 +89,7 @@ class ProductDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
         product = self.get_object()
-        # context['product'] = product
-        context['product'] = get_product(self.kwargs.get('pk'))
+        context['product'] = product
+        # context['product'] = get_product(self.kwargs.get('pk'))
         # context['categories'] = ProductCategory.objects.all()
         return context
