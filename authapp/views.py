@@ -48,7 +48,7 @@ class RegisterListView(FormView):
                 messages.error(request, form.errors)
         else:
             messages.set_level(request, messages.ERROR)
-            messages.error(request, form.errors)
+            messages.error(request, 'При регистрации произошла ошибка.')
         return render(request, self.template_name, {'form': form})
 
     @staticmethod
